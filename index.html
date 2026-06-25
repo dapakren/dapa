@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal Bahasa Indonesia</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0f0e17;
+    --surface: #1a1929;
+    --surface2: #252440;
+    --accent: #e8c547;
+    --accent2: #ff6b6b;
+    --accent3: #6bcbff;
+    --text: #fffffe;
+    --text2: #a7a9be;
+    --correct: #4ecca3;
+    --wrong: #ff6b6b;
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ── HOME ── */
+  #home {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: radial-gradient(ellipse at 20% 50%, #1e1b4b 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, #1a0a2e 0%, transparent 50%),
+                var(--bg);
+  }
+
+  .logo-badge {
+    background: var(--accent);
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+  }
+
+  h1.title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 8vw, 64px);
+    line-height: 1.1;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  h1.title span { color: var(--accent); }
+
+  .subtitle {
+    color: var(--text2);
+    text-align: center;
+    margin-bottom: 48px;
+    font-size: 15px;
+  }
+
+  .set-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .set-card {
+    background: var(--surface);
+    border: 1px solid #2d2c50;
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .set-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .set-card.c7::before { background: var(--accent); }
+  .set-card.c8::before { background: var(--accent3); }
+  .set-card.c9::before { background: var(--accent2); }
+
+  .set-card:hover {
+    transform: translateY(-4px);
+    border-color: #4a4880;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  .set-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .c7 .set-label { color: var(--accent); }
+  .c8 .set-label { color: var(--accent3); }
+  .c9 .set-label { color: var(--accent2); }
+
+  .set-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .set-desc { color: var(--text2); font-size: 14px; margin-bottom: 20px; }
+
+  .set-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+
+  .set-meta span {
+    background: var(--surface2);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .btn-start {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 999px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .c7 .btn-start { background: var(--accent); color: #000; }
+  .c8 .btn-start { background: var(--accent3); color: #000; }
+  .c9 .btn-start { background: var(--accent2); color: #fff; }
+
+  /* ── QUIZ ── */
+  #quiz { display: none; min-height: 100vh; }
+
+  .quiz-header {
+    background: var(--surface);
+    border-bottom: 1px solid #2d2c50;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .quiz-header-left { display: flex; align-items: center; gap: 12px; }
+
+  .back-btn {
+    background: var(--surface2);
+    border: none;
+    color: var(--text2);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { color: var(--text); background: #3a3860; }
+
+  .quiz-title-sm {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+  }
+
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .progress-bar {
+    width: 120px;
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+  }
+
+  .progress-text { font-size: 13px; color: var(--text2); white-space: nowrap; }
+
+  .quiz-body {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 20px 120px;
+  }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid #2d2c50;
+    border-radius: 16px;
+    padding: 28px 28px 24px;
+    margin-bottom: 16px;
+  }
+
+  .q-number {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .q-text {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    white-space: pre-wrap;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1.5px solid #2d2c50;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    text-align: left;
+    line-height: 1.5;
+  }
+
+  .option:hover:not(.answered) {
+    border-color: var(--accent);
+    background: rgba(232,197,71,0.06);
+  }
+
+  .option.selected:not(.answered) {
+    border-color: var(--accent);
+    background: rgba(232,197,71,0.1);
+  }
+
+  .option-letter {
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .option.correct { border-color: var(--correct); background: rgba(78,204,163,0.12); color: var(--correct); }
+  .option.wrong { border-color: var(--wrong); background: rgba(255,107,107,0.1); color: var(--wrong); }
+  .option.show-answer { border-color: var(--correct); background: rgba(78,204,163,0.06); color: var(--correct); }
+  .option.dimmed { opacity: 0.4; }
+
+  .explanation-box {
+    display: none;
+    background: var(--surface2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text2);
+  }
+
+  .explanation-box strong { color: var(--text); }
+  .explanation-box.visible { display: block; }
+
+  .quiz-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-top: 1px solid #2d2c50;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 999px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-primary { background: var(--accent); color: #000; }
+  .btn-primary:hover { transform: scale(1.03); box-shadow: 0 4px 20px rgba(232,197,71,0.4); }
+  .btn-secondary { background: var(--surface2); color: var(--text2); }
+  .btn-secondary:hover { color: var(--text); }
+  .btn:disabled { opacity: 0.3; cursor: default; }
+
+  /* ── RESULT ── */
+  #result { display: none; min-height: 100vh; padding: 40px 20px; }
+
+  .result-inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .result-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .score-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 4px solid var(--accent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    background: var(--surface);
+  }
+
+  .score-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  .score-label { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+  .result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .result-sub { color: var(--text2); font-size: 15px; }
+
+  .stat-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 24px 0;
+  }
+
+  .stat-box {
+    background: var(--surface);
+    border: 1px solid #2d2c50;
+    border-radius: 12px;
+    padding: 16px 24px;
+    text-align: center;
+    min-width: 100px;
+  }
+
+  .stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+  }
+
+  .stat-val.green { color: var(--correct); }
+  .stat-val.red { color: var(--wrong); }
+
+  .stat-lbl { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+  .result-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .review-section { margin-top: 8px; }
+
+  .review-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #2d2c50;
+  }
+
+  .review-item {
+    background: var(--surface);
+    border: 1px solid #2d2c50;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+
+  .review-item.r-correct { border-left: 3px solid var(--correct); }
+  .review-item.r-wrong { border-left: 3px solid var(--wrong); }
+
+  .review-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+  }
+
+  .badge-correct { background: rgba(78,204,163,0.2); color: var(--correct); }
+  .badge-wrong { background: rgba(255,107,107,0.15); color: var(--wrong); }
+
+  .review-q { font-size: 15px; line-height: 1.6; margin-bottom: 12px; white-space: pre-wrap; }
+
+  .review-answer-row {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .review-your { background: rgba(255,107,107,0.12); color: var(--wrong); padding: 4px 10px; border-radius: 6px; }
+  .review-correct-ans { background: rgba(78,204,163,0.12); color: var(--correct); padding: 4px 10px; border-radius: 6px; }
+
+  .review-explanation {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    background: var(--surface2);
+    padding: 12px 14px;
+    border-radius: 8px;
+  }
+
+  .review-explanation strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="home">
+  <div class="logo-badge">💔🥀 Latihan Soal</div>
+  <h1 class="title">Bahasa <span>Indonesia</span><br>SMP/MTs</h1>
+  <p class="subtitle">Pilih set soal yang mau di kerjain. Pas ngerjain langsung tau salah di mana & dapat penjelasannye.</p>
+  <div class="set-grid">
+    <div class="set-card c7" onclick="startQuiz(0)">
+      <div class="set-label">Set 1</div>
+      <div class="set-title">PAS/SAS Kelas VII</div>
+      <div class="set-desc">Puisi rakyat, fabel, surat, fiksi & nonfiksi</div>
+      <div class="set-meta"><span>40 soal</span><span>Pilihan ganda</span></div>
+      <button class="btn-start">Mulai Latihan →</button>
+    </div>
+    <div class="set-card c8" onclick="startQuiz(1)">
+      <div class="set-label">Set 2</div>
+      <div class="set-title">PAS/SAS Kelas VIII</div>
+      <div class="set-desc">Teks ulasan, persuasif, drama, fiksi & nonfiksi</div>
+      <div class="set-meta"><span>40 soal</span><span>Pilihan ganda</span></div>
+      <button class="btn-start">Mulai Latihan →</button>
+    </div>
+    <div class="set-card c9" onclick="startQuiz(2)">
+      <div class="set-label">Set 3</div>
+      <div class="set-title">US-UM Kelas IX</div>
+      <div class="set-desc">Deskripsi, biografi, diskusi, cerpen, ejaan & tanda baca</div>
+      <div class="set-meta"><span>40 soal</span><span>Pilihan ganda</span></div>
+      <button class="btn-start">Mulai Latihan →</button>
+    </div>
+    <div class="set-card c9" onclick="startQuiz(3)" style="border-top-color: #a78bfa;">
+      <div class="set-label" style="color:#a78bfa;">Set 4</div>
+      <div class="set-title">US-UM Soal Lanjutan</div>
+      <div class="set-desc">Biografi, cerpen, diskusi, ejaan, kalimat efektif, tanda baca</div>
+      <div class="set-meta"><span>40 soal</span><span>Pilihan ganda</span></div>
+      <button class="btn-start" style="background:#a78bfa;color:#000;">Mulai Latihan →</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz">
+  <div class="quiz-header">
+    <div class="quiz-header-left">
+      <button class="back-btn" onclick="goHome()">← Kembali</button>
+      <span class="quiz-title-sm" id="quizTitleSm"></span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-text" id="progressText"></span>
+    </div>
+  </div>
+  <div class="quiz-body" id="quizBody"></div>
+  <div class="quiz-footer">
+    <button class="btn btn-secondary" id="btnSubmit" onclick="submitAnswer()">Konfirmasi Jawaban</button>
+    <button class="btn btn-primary" id="btnNext" onclick="nextQuestion()" disabled>Soal Berikutnya</button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="result">
+  <div class="result-inner">
+    <div class="result-header">
+      <div class="score-circle">
+        <div class="score-num" id="scoreNum">0</div>
+        <div class="score-label">NILAI</div>
+      </div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-sub" id="resultSub"></div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-val green" id="statCorrect">0</div><div class="stat-lbl">Benar</div></div>
+        <div class="stat-box"><div class="stat-val red" id="statWrong">0</div><div class="stat-lbl">Salah</div></div>
+        <div class="stat-box"><div class="stat-val" id="statTotal">0</div><div class="stat-lbl">Total Soal</div></div>
+      </div>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-secondary" onclick="goHome()">← Pilih Set Lain</button>
+      <button class="btn btn-primary" onclick="retryQuiz()">🔄 Ulangi</button>
+    </div>
+    <div class="review-section">
+      <div class="review-title">📋 Review Jawaban</div>
+      <div id="reviewList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// DATA SOAL
+// ═══════════════════════════════════════════════════════════════
+
+const SETS = [
+
+// ── SET 0: KELAS 7 ──────────────────────────────────────────────
+{
+  title: "PAS/SAS Kelas VII",
+  questions: [
+    { q:"Berikut ini termasuk puisi rakyat, kecuali....", opts:["Pantun","Gurindam","Syair","Novel"], ans:3, exp:"Novel adalah karya fiksi prosa panjang, bukan yang lain ya bego. Puisi rakyat meliputi pantun, gurindam, dan syair." },
+    { q:"Dengan ilmu engkau terjaga\nDari suramnya waktu dan masa\nCemerlang akan senantiasa\nMenyinari dirimu di masa dewasa\n\nPuisi rakyat di atas berbentuk....", opts:["Pantun","Gurindam","Syair","Puisi baru"], ans:2, exp:"Syair terdiri dari 4 baris per bait, semua baris adalah isi (bukan ada sampiran), dan bersajak a-a-a-a. Berbeda dari pantun yang punya sampiran." },
+    { q:"Berbaktilah kamu kepada ibumu\nNiscaya surga akan bertemu\n\nGurindam di atas berisi tentang....", opts:["Bakti","Nasihat","Berkah","Harapan"], ans:1, exp:"Gurindam tersebut berisi nasihat agar berbakti kepada ibu dengan menjanjikan balasan surga. Fungsi gurindam memang menyampaikan nasihat/ajaran moral." },
+    { q:"Berbaktilah kamu kepada ibumu\nNiscaya surga akan bertemu\n\nLarik kedua gurindam di atas terdiri dari....suku kata", opts:["10","9","8","11"], ans:0, exp:"'Nis-ca-ya-sur-ga-a-kan-ber-te-mu' → dihitung: Nis(1)-ca(2)-ya(3)-sur(4)-ga(5)-a(6)-kan(7)-ber(8)-te(9)-mu(10) = 10 suku kata." },
+    { q:"Kata yang tepat untuk melengkapi pantun:\nAduh-aduh si bunga ...(1)\nDaunnya lebat seperti ...(2)\nAku sering mendengar ...(3)\nAdik punya sahabat ...(4)", opts:["(1)anggrek,(2)hujan,(3)lagu,(4)dayang","(1)mawar,(2)sapu,(3)suara,(4)pujaan","(1)mawar,(2)waru,(3)kabar,(4)baru","(1)melati,(2)duri,(3)cerita,(4)hati"], ans:2, exp:"Pantun harus bersajak a-b-a-b. Pilihan C: mawar-waru-kabar-baru. Sampiran: maWAR/waRU → rima ar/u, isi: kaBARu/baRU → rima r/u. Paling mendekati rima yang tepat." },
+    { q:"Berikut ini yang termasuk pantun dengan tema pendidikan adalah....", opts:["Bawa buku tidak dibaca / Maunya khusus jalan-jalan","Bawa buku untuk dibaca / Agar bisa sanggup pekerjaan","Bawa buku untuk dibaca / Untuk meraih pendidikan","Bawa buku ada lima / Dibaca habis di jalanan"], ans:2, exp:"Pilihan C secara eksplisit menyebut 'pendidikan' pada isi pantun dan pesannya positif: membaca buku untuk meraih pendidikan." },
+    { q:"Ramai orang bersorak-sorak\nMenepuk gendang dengan rebana\nAlangkah besar hati awak\nMendapat baju dan celana\n\nPantun di atas menunjukkan perasaan....", opts:["Sedih","Bahagia","Marah","Kecewa"], ans:1, exp:"'Alangkah besar hati' = ungkapan rasa sangat senang/bahagia. Mendapat baju dan celana juga menunjukkan kegembiraan." },
+    { q:"Jika kau buat kebaikan dan keburukan\nMaka balasan berdasar dari yang dilakukan\n\nMakna gurindam tersebut adalah....", opts:["Orang yang berbuat jahat akan dibalas hukuman setimpal","Orang yang berbuat kebaikan dibalas pahala berlipat","Setiap perilaku baik dan buruk akan dibalas setimpal","Janganlah berbuat keburukan kepada sesama"], ans:2, exp:"Gurindam itu mencakup dua hal sekaligus: kebaikan dan keburukan sama-sama mendapat balasan setimpal. Pilihan C paling tepat dan lengkap." },
+    { q:"Jangan hanya pandai di dalam benak\nNamun juga harus pandai di tindak\n\nMakna gurindam tersebut adalah....", opts:["Seseorang yang pandai pasti bagus juga dalam tindakan","Seseorang jangan hanya pandai dalam pikiran, harus juga cerdas bertindak","Seseorang tidak pandai mengambil keputusan pasti tidak akan pandai bertindak","Seseorang pandai intelektual akan pandai pula mengambil keputusan"], ans:1, exp:"Gurindam ini menekankan bahwa kecerdasan pikiran harus diiringi kecerdasan bertindak. Jangan hanya teori, tapi juga praktik." },
+    { q:"Baris yang tepat untuk melengkapi sampiran pantun:\n..................................\nPeganglah tiket masa depan\nTiketmu berada di sekolah", opts:["Tidur siang di atas dipan / Mata terpejam karena lelah","Seharian bermain kelereng / Senangnya bersama teman-teman","Tertawa ceria bersama teman-teman / Bermain layang-layang di lapang","Lelah badan karena bermain / Bermain gundu bersama teman"], ans:0, exp:"Rima isi: depan-sekolah. Sampiran harus berakhiran mirip. Pilihan A: dipan-lelah → tidak cocok... tapi soal aslinya A (dipan/lelah) adalah jawaban yang diterima sesuai kunci asli. Pantun harus punya 2 baris sampiran yang tidak berhubungan dengan isi." },
+    { q:"Tokoh yang diceritakan dalam penggalan teks fabel tentang Landa adalah....", opts:["Kucing","Harimau","Tikus","Landak"], ans:3, exp:"Teks jelas menyebutkan 'seekor Landak. Namanya Landa.' Landak adalah tokoh utama." },
+    { q:"Latar tempat dalam penggalan fabel Landa si Landak adalah....", opts:["Laut","Hutan","Sungai","Lembah"], ans:1, exp:"'Di hutan belantara hiduplah seekor Landak.' — latar tempat jelas di hutan." },
+    { q:"Tema yang tepat untuk penggalan fabel Landa si Landak adalah....", opts:["Keceriaan","Kemarahan","Kesedihan","Kebimbangan"], ans:2, exp:"'Hatinya sedih karena tidak mempunyai teman' — tema dominan adalah kesedihan/kesendirian." },
+    { q:"Pesan moral yang dapat diambil dari kutipan fabel Landa si Landak adalah....", opts:["Kita tidak boleh memiliki rasa percaya diri","Bertemanlah hanya dengan orang yang memiliki fisik sama","Jangan mudah merasa minder atau kurang percaya diri dengan apa yang kita miliki","Menghindar dari orang lain memang jalan yang benar"], ans:2, exp:"Landa menghindari teman karena minder dengan durinya. Pesan moralnya: jangan minder/kurang percaya diri dengan kondisi fisik diri sendiri." },
+    { q:"Di bawah ini yang bisa dibuat menjadi sebuah fabel adalah....", opts:["Kancil melawan saat diterkam oleh sang buaya","Andi memelihara beberapa ekor kucing di rumahnya","Rina bertengkar dengan kakaknya","Andi membolos dan ketahuan guru"], ans:0, exp:"Fabel adalah cerita fiksi dengan tokoh hewan yang memiliki sifat manusia (berbicara, berpikir, dll). Pilihan A melibatkan Kancil dan Buaya sebagai tokoh hewan." },
+    { q:"Pesan moral dari kutipan fabel Raja Kera yang bergantung pada akar adalah....", opts:["Tidak ada akar anggota badan pun berguna bagi rakyat","Melakukan sesuatu harus dengan perhitungan yang matang supaya selamat","Seorang pemimpin harus mau membuat jembatan untuk rakyatnya","Seorang pemimpin harus memikirkan nasib rakyatnya dalam keadaan bahaya sekalipun"], ans:3, exp:"Raja Kera rela mengorbankan dirinya bergantung demi membuat jembatan bagi rakyatnya. Pesan: pemimpin harus peduli dan berkorban untuk rakyat." },
+    { q:"Bagian akhir dari cerita yang mengandung makna/amanat yang dapat diambil dari sebuah cerita merupakan struktur....", opts:["Orientasi","Komplikasi","Resolusi","Koda"], ans:3, exp:"Koda adalah bagian penutup cerita yang berisi pesan moral atau amanat yang bisa dipetik dari cerita tersebut." },
+    { q:"'Pada suatu pagi, sang Semut berjalan ke sebuah taman. Karena hujan, genangan lumpur terdapat di mana-mana.'\n\nPernyataan di atas dalam teks fabel terdapat pada bagian....", opts:["Orientasi","Komplikasi","Resolusi","Koda"], ans:0, exp:"Orientasi adalah bagian pembuka yang memperkenalkan tokoh, latar tempat, waktu, dan suasana cerita." },
+    { q:"'Kuda berkulit harimau itu melambangkan bahwa sepandai-pandainya orang berpura-pura, suatu saat akan terbongkar...'\n\nPenggalan cerita fabel tersebut merupakan bagian....", opts:["Orientasi","Komplikasi","Resolusi","Koda"], ans:3, exp:"Kalimat tersebut berisi amanat/moral cerita yang disampaikan di akhir. Ini adalah bagian Koda." },
+    { q:"Monyet yang dalam cerita fabel diceritakan hidup di sebuah kota besar (padahal aslinya di hutan). Bentuk cerita tersebut termasuk jenis fabel....", opts:["Kenyataan","Adaptasi","Buatan","Alami"], ans:1, exp:"Fabel adaptasi adalah fabel yang dikembangkan dengan mengubah beberapa hal dari kenyataan aslinya, seperti hewan yang tinggal di tempat tidak sesuai habitatnya." },
+    { q:"Media komunikasi berupa tulisan antara seseorang atau lembaga dengan seseorang atau lembaga lainnya disebut....", opts:["Surat","Pengumuman","Alat komunikasi","Pemberitahuan"], ans:0, exp:"Surat adalah media komunikasi tertulis antara pihak-pihak tertentu, baik perseorangan maupun lembaga." },
+    { q:"Berikut ciri yang terdapat pada surat dinas adalah....", opts:["Tidak menggunakan nomor surat","Salam pembuka dan penutup bervariasi","Penggunaan bahasa bebas sesuai keinginan penulis","Menggunakan nomor surat, lampiran, dan perihal"], ans:3, exp:"Surat dinas adalah surat resmi yang memiliki ciri khas: ada nomor surat, lampiran, dan perihal. Bahasanya formal dan baku." },
+    { q:"Bagian yang membedakan antara surat dinas dengan surat pribadi adalah....", opts:["Tanda tangan","Kepala surat","Tanggal surat","Nama pengirim"], ans:1, exp:"Kepala surat (kop surat) adalah ciri khas surat dinas yang berisi nama instansi/lembaga. Surat pribadi tidak memiliki kepala surat." },
+    { q:"Bahasa surat pribadi seseorang bersifat....", opts:["Kaku dan formal","Formal dan resmi","Tidak kaku dan resmi","Tidak kaku dan sopan"], ans:3, exp:"Surat pribadi menggunakan bahasa yang lebih santai dan akrab, tetapi tetap sopan karena surat adalah bentuk komunikasi tertulis yang menghormati penerima." },
+    { q:"Penulisan tempat dan tanggal surat yang tepat adalah....", opts:["Gresik, 10 Juni 2022","Gresik, 10 Juni 2022.","Gresik 10 juni 2022","gresik, 10-07-2022"], ans:0, exp:"Format yang benar: Nama kota diawali huruf kapital, diikuti koma, tanggal, nama bulan (kapital), dan tahun tanpa tanda titik di akhir." },
+    { q:"Seorang wali murid mengirimkan surat kepada wali kelas meminta izin anaknya tidak masuk karena sakit. Surat tersebut merupakan surat....", opts:["Penawaran","Permohonan izin","Pemberitahuan","Pernyataan"], ans:1, exp:"Meminta izin = permohonan izin. Surat yang berisi permintaan agar diizinkan sesuatu disebut surat permohonan izin." },
+    { q:"Contoh salam pembuka yang paling tepat digunakan dalam surat dinas adalah....", opts:["Selamat pagi,","Salam damai untuk semua","Dengan hormat,","Salam rindu"], ans:2, exp:"'Dengan hormat,' adalah salam pembuka resmi yang paling umum dan tepat digunakan dalam surat dinas/formal." },
+    { q:"Topik berikut yang tepat untuk menulis surat resmi adalah....", opts:["Kisah pengalaman selama berlibur ke Bali","Undangan rapat sosialisasi ujian sekolah","Menanyakan kabar ayah di perantauan","Permohonan seorang anak kepada ibunya"], ans:1, exp:"Surat resmi/dinas digunakan untuk keperluan formal/kedinasan seperti undangan rapat. Pilihan lainnya lebih cocok untuk surat pribadi." },
+    { q:"Pembukaan surat yang tepat dalam surat pribadi adalah....", opts:["Bersama surat ini, saya kabarkan bahwa keadaan keluarga di Bali baik.","Liburan semester ini, saya berencana akan pergi ke Semarang.","Aku tunggu balasanmu segera.","Halo apa kabar, Paman? Mudah-mudahan Paman sehat."], ans:3, exp:"Pembukaan surat pribadi yang tepat dimulai dengan salam dan menanyakan kabar penerima. Pilihan D paling sesuai sebagai pembukaan yang hangat dan sopan." },
+    { q:"Pernyataan yang tepat mengenai isi surat tentang kegiatan ekstrakurikuler menari Lisa adalah....", opts:["Perkenalan seorang teman","Permohonan untuk melakukan kegiatan","Permintaan saling bertukar cerita","Undangan menghadiri kegiatan ekstrakurikuler"], ans:2, exp:"Kalimat 'Lain waktu ceritakan kegiatan-kegiatan menarik di sekolahmu' menunjukkan si pengirim surat mengajak bertukar cerita." },
+    { q:"Berikut yang bukan termasuk karya fiksi adalah....", opts:["Roman","Novel","Buku ajar","Kumpulan cerpen"], ans:2, exp:"Buku ajar adalah buku nonfiksi yang berisi materi pelajaran berdasarkan fakta dan ilmu pengetahuan. Roman, novel, dan kumpulan cerpen adalah karya fiksi." },
+    { q:"Dari daftar buku (IPA, resep, dongeng, ensiklopedia, cerpen, novel), yang termasuk kategori fiksi adalah....", opts:["Buku cerpen, buku dongeng, buku novel","Buku ensiklopedia, buku cerpen, buku novel","Buku IPA, buku dongeng, buku resep","Buku resep, buku ensiklopedia, buku IPA"], ans:0, exp:"Cerpen, dongeng, dan novel adalah karya fiksi (rekaan/imajinasi). Sedangkan IPA, resep, dan ensiklopedia adalah nonfiksi (berdasarkan fakta)." },
+    { q:"Membuat peta pikiran buku nonfiksi dimulai dari kegiatan....", opts:["Meringkas","Membaca buku secara keseluruhan","Memisahkan butir-butir pokok","Membaca ulasan buku yang akan dirangkum"], ans:1, exp:"Langkah pertama membuat peta pikiran adalah membaca buku secara keseluruhan terlebih dahulu untuk memahami isi dan struktur buku." },
+    { q:"Dalam membuat sinopsis sebuah buku harus menggunakan kalimat....", opts:["Sopan dan santun","Runtut dan efektif","Baik dan singkat","Singkat dan ambigu"], ans:1, exp:"Sinopsis harus ditulis dengan kalimat yang runtut (berurutan/logis) dan efektif (singkat, padat, tidak bertele-tele)." },
+    { q:"Buku yang memuat hal-hal berdasarkan fakta dan kenyataan disebut buku....", opts:["Nonfiksi","Fiksi","Novel","Antologi puisi"], ans:0, exp:"Buku nonfiksi berisi informasi, pengetahuan, atau fakta nyata. Lawannya adalah fiksi yang berisi imajinasi pengarang." },
+    { q:"Berikut yang bukan contoh kalimat komentar terhadap buku fiksi adalah....", opts:["Buku cerita ini memiliki jalan cerita yang menarik","Buku cerita itu sangat bagus karena ilustrasi gambarnya menarik","Saya sangat menyukai karakter tokoh utamanya karena sangat inspiratif","Pembahasan tiap bab dalam buku pelajaran ini sangat membosankan"], ans:3, exp:"Pilihan D membicarakan buku pelajaran (nonfiksi), bukan buku fiksi. Komentar terhadap buku fiksi harus menyangkut unsur fiksi seperti cerita, tokoh, alur, dll." },
+    { q:"Berikut ini yang merupakan penggalan buku nonfiksi adalah....", opts:["Pada bab II pembaca dapat menemukan berbagai fakta makna praktik KKN.","Buku ini diceritakan dengan gaya humor, sikap sinis, sarkasme para tokohnya.","Novel ini meninggalkan kesan arti sejarah, kearifan, dan kefanaan manusia.","Pengarang sangat cermat dalam menggambarkan watak para tokoh."], ans:0, exp:"Pilihan A menyebut 'fakta' dan 'bab II' — ciri penulisan nonfiksi. Pilihan B, C, D semua merujuk pada novel/cerita fiksi." },
+    { q:"Di bawah ini yang merupakan komentar buku fiksi secara tepat adalah....", opts:["Imajinasinya sangat kuat dalam membangun alur cerita fantasi lokal","Secara keseluruhan buku ini hanya menginformasikan hal yang telah diketahui umum","Buku ini ditulis dengan sistematika yang runtut sehingga sangat mudah dipahami","Buku ini mengangkat masalah aktual dan cerdas, tetapi tidak terkesan menggurui"], ans:0, exp:"Komentar fiksi harus menyentuh unsur fiksi. Pilihan A menyebut 'imajinasi' dan 'alur cerita fantasi' — khas fiksi. Pilihan B, C, D lebih cocok untuk nonfiksi." },
+    { q:"Kutipan yang menunjukkan isi buku 'Matinya Media' terdapat pada kalimat nomor....", opts:["1)","2)","3)","4)"], ans:1, exp:"Kalimat 2: 'buku tersebut mengulas perkembangan media masa yang mulai mengancam masa depan demokrasi' — ini adalah isi/pembahasan buku. Kalimat 1 adalah identitas, 3 tampilan fisik, 4 kelemahan." },
+    { q:"Adanya gambar, bagan, atau gambaran dalam sebuah buku nonfiksi diharapkan dapat....", opts:["Menggambarkan karakter tokoh dalam buku","Menggambarkan latar kejadian dalam buku","Hanya untuk memperindah tampilan buku","Menunjang informasi dalam buku"], ans:3, exp:"Dalam buku nonfiksi, gambar/bagan/diagram berfungsi untuk memperjelas dan menunjang informasi yang disampaikan dalam teks." },
+  ]
+},
+
+// ── SET 1: KELAS 8 ──────────────────────────────────────────────
+{
+  title: "PAS/SAS Kelas VIII",
+  questions: [
+    { q:"Teks yang bertujuan untuk menilai dan memberikan masukan terhadap suatu karya yaitu....", opts:["Teks Ulasan","Teks Berita","Teks Persuasif","Teks Deskripsi"], ans:0, exp:"Teks ulasan (resensi) bertujuan menilai, menganalisis, dan memberikan komentar/masukan terhadap suatu karya (buku, film, dll)." },
+    { q:"Berikut yang tidak termasuk tujuan dari teks ulasan yaitu....", opts:["Memberi tahu dan mengajak pembaca untuk menilai suatu karya","Memberikan opini secara subjektif terhadap suatu karya","Memberikan pertimbangan kepada pembaca sebelum menikmati suatu karya","Memberitahu kepada pembaca terkait kelebihan dan kekurangan suatu karya"], ans:1, exp:"Tujuan utama teks ulasan adalah objektif + memberi pertimbangan. Memberikan opini subjektif bukan tujuan utama; justru ulasan yang baik harus seimbang dan disertai argumen." },
+    { q:"Berikut termasuk identitas karya yang terdapat dalam sebuah film, kecuali....", opts:["Judul film","Penulis naskah","Penerbit","Tanggal rilis"], ans:2, exp:"Penerbit adalah identitas buku, bukan film. Film memiliki sutradara, produser, penulis naskah, pemain, dan tanggal rilis — bukan penerbit." },
+    { q:"Berikut yang termasuk identitas karya dalam sebuah buku yaitu....", opts:["Sutradara","Judul buku","Pemain","Tanggal rilis"], ans:1, exp:"Identitas buku meliputi judul, penulis, penerbit, tahun terbit, tebal halaman, dll. Sutradara dan pemain adalah identitas film." },
+    { q:"Pada teks ulasan, paragraf yang isinya berupa pandangan penulis terhadap suatu karya disebut sebagai....", opts:["Identitas karya","Orientasi","Tafsiran","Evaluasi"], ans:3, exp:"Evaluasi adalah bagian teks ulasan yang berisi penilaian/pandangan penulis terhadap kelebihan dan kekurangan karya." },
+    { q:"Kutipan teks: 'Buku ini menceritakan tentang pasang surut perjuangan Lafran Pane...' termasuk dalam struktur bagian....", opts:["Identitas karya","Orientasi","Tafsiran","Evaluasi"], ans:2, exp:"Tafsiran adalah bagian yang menceritakan/menjelaskan isi karya secara keseluruhan. Kutipan tersebut menceritakan isi buku → Tafsiran." },
+    { q:"Berikut yang termasuk evaluasi dalam teks ulasan yaitu....", opts:["Lafran Pane anak lasak dari kaki gunung sibual","Buku Merdeka sejak hati dikemas dengan bahasa yang menarik dan santai sehingga pembaca mudah mengerti","Kehidupannya penuh dengan lika-liku semenjak ditinggalkan orang tuanya","Lafran tidak ingin diatur, ia ingin kebebasan dalam hidupnya"], ans:1, exp:"Evaluasi berisi penilaian: 'bahasa yang menarik dan santai, sehingga pembaca mudah mengerti' adalah penilaian terhadap kualitas buku." },
+    { q:"Berikut yang termasuk kalimat konjungsi penerang yaitu....", opts:["Buku ini termasuk dalam kategori buku terlaris sepanjang tahun 2021","Film tenggelamnya kapal Van der Wijk termasuk dalam film paling laris tahun 2013","Pada buku Atheis terdapat nilai moral bahwa kita harus memaafkan setiap kesalahan","Hasan memutuskan ingin berpisah dengan Kartini dan kembali ke kampung halamannya"], ans:2, exp:"Konjungsi penerang: bahwa, yakni, yaitu. Kalimat C menggunakan 'bahwa' yang menjelaskan nilai moral dalam buku Atheis." },
+    { q:"Berikut yang termasuk dalam kalimat konjungsi temporal yaitu....", opts:["Sukses dengan novel Dilan 1990 dan Dilan 1991 akhirnya penulis Pidi Baiq membuat sekuel 'suara dari Milea'","Pada film tenggelamnya kapal Van der Wijk, Herjunot Ali berperan sebagai Zainuddin","Karena film Keluarga Cemara mendapat sambutan yang baik, oleh sebab itu akan dibuat bagian kedua","Buku ini cocok untuk dibaca karena mengangkat permasalahan yang tidak rumit"], ans:0, exp:"Konjungsi temporal: akhirnya, kemudian, setelah, ketika, dll. Kalimat A menggunakan 'akhirnya' yang menunjukkan urutan waktu." },
+    { q:"Urutkan langkah-langkah menyusun teks ulasan:\n1. Membuat saran-saran untuk pembaca\n2. Mencatat hal-hal yang menarik dari buku\n3. Mencatat Identitas buku\n4. Merumuskan kesimpulan tentang isi buku", opts:["2-4-3-1","3-4-2-1","3-2-4-1","2-3-4-1"], ans:2, exp:"Urutan yang logis: (3) Catat identitas buku → (2) Catat hal menarik → (4) Rumuskan kesimpulan → (1) Buat saran. Mulai dari identifikasi, lalu analisis, kemudian simpulan, dan terakhir saran." },
+    { q:"Teks yang isinya bertujuan mengajak pembaca agar melakukan apa yang diinginkan penulis disebut sebagai....", opts:["Teks deskripsi","Teks Puisi","Teks persuasif","Teks ulasan"], ans:2, exp:"Teks persuasif = teks yang bertujuan mempengaruhi/mengajak/membujuk pembaca untuk melakukan atau mempercayai sesuatu." },
+    { q:"Berikut yang tidak termasuk ciri-ciri teks persuasif yaitu....", opts:["Memiliki paragraf atau kalimat yang bersifat ajakan","Teks disertai alasan dan bukti yang kuat","Biasanya terdapat adanya sedikit konflik dalam teks","Terdapat kata ayo, mari, dan sebagainya"], ans:2, exp:"Konflik bukan ciri teks persuasif. Ciri persuasif: ada ajakan, ada bukti/fakta, menggunakan kata ajakan (ayo, mari), dll." },
+    { q:"Kutipan: 'Generasi muda adalah generasi penerus bangsa... mari kita harus meningkatkan semangat belajar...' termasuk jenis persuasif....", opts:["Politik","Ajakan","Propaganda","Pendidikan"], ans:3, exp:"Teks tersebut mengajak generasi muda untuk belajar dan berprestasi — berkaitan dengan pendidikan. Jenis persuasif pendidikan." },
+    { q:"Berikut yang termasuk dalam persuasif propaganda yaitu....", opts:["Mari kita kurangi bermain game online agar terhindar dari penyakit mata","Ayo pilih kandidat 2 sebagai calon ketua dan wakil Osis","Pilih air Mineral Z.A sebagai minuman pelepas rasa dahaga","Sayangi tubuhmu dan konsumsi air DAHSYAT"], ans:1, exp:"Propaganda adalah upaya mempengaruhi untuk kepentingan politik/golongan tertentu. Pilihan B mengajak memilih kandidat tertentu dalam pemilihan OSIS." },
+    { q:"'Belakangan ini semakin marak anak yang kecanduan bermain Gawai...' termasuk dalam struktur teks persuasif bagian....", opts:["Rangkaian argumen","Pengenalan isu","Pernyataan ajakan","Penegasan kembali"], ans:1, exp:"Pengenalan isu adalah bagian awal yang memperkenalkan masalah/isu yang akan dibahas. Kalimat tersebut memperkenalkan masalah kecanduan gadget." },
+    { q:"Pada sebuah paragraf teks persuasif, opini penulis terdapat dalam bagian....", opts:["Pengenalan Isu","Rangkaian argumen","Pernyataan ajakan","Penegasan kembali"], ans:1, exp:"Rangkaian argumen berisi fakta, data, dan opini penulis untuk mendukung ajakan. Di sinilah penulis menyampaikan pendapat dan alasannya." },
+    { q:"Berikut yang termasuk dalam kalimat ajakan dalam teks persuasif yaitu....", opts:["Julurkan tangan, mari peduli dan bantu sesama dalam korban bencana banjir","Sistem ketenagakerjaan menuntut sumber daya lulusan dan prestasi terbaik","Bergabung dalam kegiatan Osis sekolah akan menunjang pengalaman berorganisasi","Akibat Covid-19 kegiatan jadi terbatas, banyak tenaga kerja yang akhirnya dirumahkan"], ans:0, exp:"Kalimat ajakan ditandai dengan kata 'mari'. Pilihan A: 'mari peduli dan bantu sesama' — jelas merupakan kalimat ajakan." },
+    { q:"Berikut yang termasuk kalimat penegasan kembali dalam teks persuasif yaitu....", opts:["Mari menjaga lingkungan agar tetap sehat dan bersih","Ayo peduli lingkungan, lingkungan sehat hati nyaman","Oleh karena itu, marilah kita sebagai warga yang baik agar sadar dan peduli lingkungan","Marilah kita bersama-sama terapkan 3M"], ans:2, exp:"Penegasan kembali biasanya diawali kata 'oleh karena itu, oleh sebab itu, dengan demikian' yang menegaskan kembali inti ajakan." },
+    { q:"'Berdasarkan World Health Organization (WHO) kematian akibat merokok mencapai 30%...' — kalimat perujukan terdapat dalam....", opts:["Kalimat pertama","Kalimat kedua","Kalimat ketiga","Kalimat keempat"], ans:2, exp:"Kalimat perujukan menggunakan kata 'berdasarkan' dan menyebut sumber (WHO). Ini ada di kalimat ketiga teks tersebut." },
+    { q:"'Plak adalah lapisan lengket yang terdiri dari bakteri dan asam yang menyebabkan gigi berlubang.' — kalimat fakta terdapat dalam....", opts:["Kalimat pertama","Kalimat kedua","Kalimat ketiga","Kalimat keempat"], ans:2, exp:"Kalimat fakta berisi pernyataan yang dapat dibuktikan kebenarannya. Definisi plak adalah fakta ilmiah yang ada di kalimat ketiga." },
+    { q:"Berikut yang termasuk kalimat konjungsi kausalitas yaitu....", opts:["Banjir yang terjadi belakangan ini terjadi karena saluran air yang tersumbat oleh sampah","Sampah tersebut akan didaur ulang menjadi sebuah kerajinan","Berdasarkan data dari kepala desa, setiap tahun ada sekitar 20% masyarakat yang membuang sampah di lahan kosong","Sampah yang dibiarkan terus-menerus akan mengganggu lingkungan sekitar"], ans:0, exp:"Konjungsi kausalitas menyatakan sebab-akibat: karena, sehingga, akibat, oleh karena itu. Kalimat A menggunakan 'karena'." },
+    { q:"Kata teknis dalam paragraf tentang vaksin Covid-19 yaitu....", opts:["Virus dan Vaksin","Ancaman dan menyemarakkan","Puskesmas dan kesehatan","Menyemarakkan dan Vaksin"], ans:0, exp:"Kata teknis adalah istilah khusus dalam bidang tertentu. 'Virus' dan 'Vaksin' adalah kata teknis bidang kesehatan/medis." },
+    { q:"Kejadian dan tingkah laku manusia dalam kehidupan sehari-hari yang ditulis dalam sebuah cerita atau bertujuan untuk dipentaskan disebut sebagai....", opts:["Cerpen","Puisi","Drama","Cerita"], ans:2, exp:"Drama adalah karya sastra yang menampilkan kejadian/konflik manusia melalui dialog dan aksi yang ditujukan untuk dipentaskan." },
+    { q:"Pada sebuah drama harus memiliki ide atau pikiran yang akan menjadi persoalan dalam sebuah teks drama, hal itu disebut sebagai....", opts:["Tema","Alur","Tokoh","Setting"], ans:0, exp:"Tema adalah ide/gagasan pokok yang menjadi dasar atau persoalan utama dalam sebuah drama." },
+    { q:"Watak atau sifat yang dimiliki oleh seorang tokoh dalam drama disebut sebagai....", opts:["Watak","Tokoh","Penokohan","Alur"], ans:2, exp:"Penokohan adalah cara penggambaran watak/karakter tokoh dalam cerita. Ini berbeda dari 'tokoh' (orang/karakter) dan 'watak' (sifat itu sendiri)." },
+    { q:"Dalam penggalan drama tentang Andi yang mengembalikan uang Roni, tokoh Andi memiliki watak....", opts:["Protagonis","Antagonis","Tritagonis","Mengajak kebaikan"], ans:0, exp:"Protagonis adalah tokoh utama yang memiliki sifat baik/positif. Andi mengembalikan uang Roni — tindakan positif → protagonis." },
+    { q:"Dalam drama di kantin (Ryan, Miko, Sinta), yang termasuk tokoh utama yaitu....", opts:["Ryan","Miko","Sinta","Ryan dan Sinta"], ans:1, exp:"Miko adalah tokoh yang paling aktif memberi solusi, menasihati, dan mendominasi percakapan → tokoh utama." },
+    { q:"'Akhirnya permasalahan diantara Rara dan Lika menemukan titik terang. Keduanya sadar akan kesalahan masing-masing dan saling minta maaf.' — termasuk dalam....", opts:["Prolog","Dialog","Monolog","Epilog"], ans:3, exp:"Epilog adalah bagian penutup drama yang berisi keterangan/narasi tentang penyelesaian cerita setelah konflik berakhir." },
+    { q:"'Saat itu sedang istirahat sekolah. Ilham, Revan, dan Nehan sedang berdiskusi mengenai tugas kelompok...' — termasuk dalam....", opts:["Prolog","Epilog","Dialog","Monolog"], ans:0, exp:"Prolog adalah narasi pembuka/pengantar sebelum drama dimulai yang menjelaskan latar situasi awal." },
+    { q:"Amanat dari drama Dian yang main game sampai tidak belajar adalah....", opts:["Ada baiknya bermain game setelah menyelesaikan semua pekerjaan","Bermain game dengan rentang waktu yang lama akan mengakibatkan ketagihan","Bermain game dengan memperhatikan waktu agar punya waktu untuk diri sendiri","Bermain game dengan bijak, dan dahulukan kewajiban sebagai seorang pelajar yaitu belajar"], ans:3, exp:"Pesan utama drama tersebut: sebagai pelajar, kewajiban utama adalah belajar. Bermain game boleh tapi jangan sampai mengorbankan kewajiban belajar." },
+    { q:"Latar tempat yang digambarkan dalam kutipan naskah drama Ifid, Brilli, Kiki, dan Agung adalah....", opts:["Di rumah Ifid","Di rumah Kiki","Di luar kelas","Di dalam kelas"], ans:3, exp:"Dialog menyebut 'sebentar lagi udah mau masuk' dan 'biar tidak kena marah guru' → mereka sedang di dalam/sekitar kelas sebelum masuk. Jawaban D (di dalam kelas) sesuai konteks." },
+    { q:"Berikut yang merupakan Kalimat langsung, kecuali....", opts:["\"Bagaimana kamu bisa melakukan itu padaku Dani?\"","Dina mengatakan padaku bahwa cuaca hari ini panas sekali","Rina berkata, \"Coba kamu selesaikan soal yang ini\"","\"Kapan buku komikku kamu kembalikan Sam?\" Kata Dion"], ans:1, exp:"Kalimat B adalah kalimat tidak langsung (menggunakan kata 'bahwa'). Kalimat langsung menggunakan tanda petik untuk kutipan langsung." },
+    { q:"Buku bacaan dibedakan menjadi....", opts:["Fiksi dan novel","Novel dan nonfiksi","Fiksi dan nonfiksi","Bacaan dan pelajaran"], ans:2, exp:"Buku bacaan dibagi menjadi dua kategori besar: fiksi (karangan/imajinasi) dan nonfiksi (berdasarkan fakta/kenyataan)." },
+    { q:"Kutipan tentang Putri Katum yang menemukan induk biri-biri termasuk dalam....", opts:["Fiksi","Nonfiksi","Humor","Cerpen"], ans:0, exp:"Cerita tentang biri-biri ajaib yang bisa mengabulkan permintaan adalah cerita fiksi (tidak nyata/imajinatif)." },
+    { q:"Istilah kata penting dalam buku disebut sebagai....", opts:["Majas","Diksi","Indeks","Peta konsep"], ans:2, exp:"Indeks adalah daftar kata penting beserta nomor halaman yang terdapat di bagian akhir buku, memudahkan pencarian istilah." },
+    { q:"Berikut termasuk dalam buku fiksi, kecuali....", opts:["Cerpen","Novel","Sejarah","Komik"], ans:2, exp:"Buku sejarah adalah nonfiksi karena berisi fakta kejadian masa lampau. Cerpen, novel, dan komik adalah karya fiksi." },
+    { q:"Teknik membaca buku secara cepat dan menyeluruh untuk memperoleh gambaran umum disebut sebagai....", opts:["Skimming","Scanning","Selecting","Skipping"], ans:0, exp:"Skimming adalah teknik membaca cepat secara keseluruhan untuk mendapat gambaran umum/ide pokok tanpa membaca detail." },
+    { q:"Teknik membaca buku dengan mengabaikan bagian yang tidak diperlukan disebut sebagai....", opts:["Skimming","Scanning","Selecting","Skipping"], ans:3, exp:"Skipping adalah teknik membaca dengan melewati/mengabaikan bagian yang tidak relevan dengan tujuan membaca." },
+    { q:"'Matanya begitu indah bak batu permata yang langka' — termasuk dalam majas....", opts:["Hiperbola","Personifikasi","Ironi","Sinisme"], ans:0, exp:"Majas hiperbola adalah gaya bahasa yang melebih-lebihkan kenyataan. Membandingkan mata dengan batu permata yang langka adalah hiperbola (berlebihan)." },
+    { q:"Berikut yang termasuk majas metafora yaitu....", opts:["Dua pemadam kebakaran dikerahkan untuk memadamkan si jago merah","Hidup bagaikan roda yang berputar, kadang di atas kadang di bawah","Orang tuanya sampai bekerja keras demi memenuhi kebutuhan hidup","Hanya ada air putih di rumah ini"], ans:0, exp:"'Si jago merah' = metafora untuk api (menyebut sesuatu dengan nama lain yang memiliki sifat serupa tanpa kata pembanding seperti 'bagaikan')." },
+  ]
+},
+
+// ── SET 2: US-UM (Teks Deskripsi, Imajinasi, Prosedur, Surat) ──
+{
+  title: "US-UM Kelas IX (Set A)",
+  questions: [
+    { q:"Teks deskripsi tentang taman di belakang sekolah menggambarkan tentang....", opts:["Sekolah","Lapangan parkir","Halaman sekolah","Taman pesona"], ans:3, exp:"Teks tersebut secara spesifik mendeskripsikan taman di belakang sekolah yang disebut 'taman pesona' oleh narator." },
+    { q:"Ide pokok teks deskripsi tentang belalang yang menyerbu lahan pertanian dinyatakan dengan kalimat nomor....", opts:["1","4","2","3"], ans:0, exp:"Kalimat 1: 'Setiap sore, berpuluh ribu belalang menyerbu lahan pertanian di desa Magersari' — ini adalah gagasan utama yang dikembangkan oleh kalimat-kalimat berikutnya." },
+    { q:"Susunan kalimat tentang Danau Limboto agar menjadi teks deskripsi runtut adalah....", opts:["2)-1)-3)-5)-4)","2)-3)-1)-4)-5)","2)-4)-5)-1)-3)","2)-5)-3)-4)-1)"], ans:0, exp:"Urutan logis: Pengenalan danau (2) → isi danau (1) → spot bagus (3) → bisa foto-foto (5) → makanan khas (4)." },
+    { q:"Variasi istilah 'ekstrem' yang tepat adalah....", opts:["Besar, Tiba-tiba, Mendadak","Tegas, Cepat, Luar biasa","Tiba-tiba, Keras, Luar biasa","Ganas, Kencang, Keras"], ans:2, exp:"Ekstrem berarti 'sangat berlebihan/tidak biasa/luar biasa'. Sinonim terbaik: tiba-tiba (mendadak), keras (intens), luar biasa (tidak normal)." },
+    { q:"Deskripsi bagian pada teks deskripsi Pantai Parangtritis ditunjukkan pada paragraf....", opts:["1 dan 2","2 dan 3","3 dan 4","1 dan 4"], ans:1, exp:"Deskripsi bagian menjelaskan detail bagian-bagian objek. Paragraf 2 (pemandangan pantai) dan 3 (suasana sore hari) adalah deskripsi bagian-bagian pantai." },
+    { q:"Struktur yang tepat dari teks deskripsi Pantai Melasti Ungasan adalah....", opts:["Judul menjelaskan Pantai Melasti Ungasan","Paragraf pertama menjelaskan identifikasi tentang pantai-pantai yang ada di Bali","Pada deskripsi bagian hanya menjelaskan keindahan pantai Melasti Ungasan","Simpulan serta kesan terdapat di paragraf 3 dengan mengajak pembaca menjaga kebersihan"], ans:1, exp:"Paragraf pertama berisi identifikasi: letak, posisi pantai secara umum dalam konteks wisata Bali → identifikasi objek yang akan dideskripsikan." },
+    { q:"Dalam kutipan teks cerita imajinasi 'Makhluk Berkedip', yang termasuk bagian komplikasi nomor....", opts:["1)","2)","3)","4)"], ans:1, exp:"Komplikasi adalah bagian konflik/masalah. Paragraf 2: si makhluk mogok tidak mau berkedip → menimbulkan kekacauan. Ini adalah konflik/masalah." },
+    { q:"Tanggapan yang tepat terhadap kutipan teks fantasi Purbasari dan Purbararang adalah....", opts:["Seharusnya Purbararang tidak bercerita kepada tunangannya","Seharusnya seorang adik mengalah kepada kakaknya","Seharusnya Purbasari tidak pergi ke hutan tetapi tetap berada di istana","Seharusnya seorang kakak memiliki sifat bijak dan sayang pada adiknya"], ans:3, exp:"Perilaku Purbararang yang iri dan menyakiti adiknya adalah perilaku negatif. Tanggapan yang tepat: kakak seharusnya bijak dan menyayangi adik." },
+    { q:"Kalimat/pernyataan yang bermajas Sarkasme dari kutipan teks fantasi Mao secara berurutan benar atau salah....", opts:["Benar-Benar-Benar-Salah","Salah-Benar-Benar-Salah","Salah-Benar-Salah-Benar","Benar-Salah-Benar-Salah"], ans:1, exp:"Sarkasme adalah sindiran tajam/kasar. (1) 'Kau pasti melupakan mantranya' — sindiran tapi tidak kasar (Salah). (2) 'Dasar bodoh!' — kasar/sarkasme (Benar). (3) 'Nanti kita ketularan bodohnya' — sarkasme (Benar). (4) 'Mao hanya bisa tertunduk sedih' — deskripsi biasa, bukan sarkasme (Salah)." },
+    { q:"Urutan langkah petunjuk mencangkok tanaman yang tepat adalah....", opts:["5-3-4-2-1","5-1-3-4-2","1-3-4-2-5","1-5-3-4-2"], ans:0, exp:"Urutan mencangkok: (5) Pilih tangkai sehat → (3) Kerat kulit batang → (4) Bungkus dengan tanah subur → (2) Bungkus dengan sabut/plastik → (1) Siram dengan air." },
+    { q:"Urutan yang tepat paragraf prosedur membuat tape singkong adalah....", opts:["2-1-3-4-6-5-7","2-1-3-6-7-5-4","2-1-4-3-5-7-6","2-1-4-5-3-7-6"], ans:2, exp:"Urutan logis: (2) Singkong dikupas & direbus → (1) Taruh di wadah & beri ragi → (4) Pemberian ragi harus merata → (3) Agar terjadi fermentasi → (5) Tutup dengan daun pisang → (7) Tutup 3 hari → (6) Setelah 3 hari siap disantap." },
+    { q:"Dari kalimat prosedur cincau, secara berurutan benar atau salah pernyataan tersebut adalah....", opts:["Benar-Benar-Benar-Salah","Benar-Salah-Benar-Salah","Benar-Benar-Salah-Salah","Salah-Benar-Benar-Salah"], ans:2, exp:"(1) Prosedur tambah 'masukkan dalam ember' — Benar (lebih lengkap). (2) Proses pelayuan merata — Benar. (3) 'lalu kaku' seharusnya 'menjadi lemas' — konjungsi salah, harusnya 'dan' bukan 'lalu kaku'. (4) 'sebab' seharusnya konteks berbeda — Salah." },
+    { q:"Pernyataan yang sesuai untuk mengakhiri surat pribadi Tiara kepada Mila adalah....", opts:["Sampai di sini dulu, ya lain kali kita sambung lagi. Aku tunggu suratmu berikutnya","Demikian permohonan maafku. Atas perhatianmu, aku ucapkan terima kasih","Mila, mungkin itu dulu yang dapat aku ceritakan kepadamu. Lain kali kita sambung lagi","Sampai di sini dulu, ya. Aku berharap kamu menerima permintaan maafku dan bisa berteman denganmu."], ans:3, exp:"Tujuan surat Tiara adalah meminta maaf dan ingin berteman. Penutup yang paling tepat harus mencerminkan kedua tujuan tersebut → Pilihan D." },
+    { q:"Surat pribadi Tiara kepada Mila menginformasikan....", opts:["Mila berkenalan dengan Tiara saat berada di taman kota","Tiara meminta maaf kepada Mila atas kejadian di taman kota","Mila memberikan kartu nama kepada Tiara setelah mereka bertabrakan","Mila meminta maaf kepada Tiara karena telah menumpahkan minuman"], ans:1, exp:"Isi utama surat: Tiara (pengirim) menumpahkan minuman ke baju Mila → Tiara menulis surat untuk minta maaf dan berkenalan." },
+    { q:"Isi surat resmi yang paling sesuai dengan ilustrasi rapat OSIS porseni adalah....", opts:["Kami mengharapkan kehadiran para pengurus OSIS... acara: Persiapan Lomba","Teman-teman pengurus OSIS... 23 Februari 2025... Ruang Rapat... Persiapan Bakti Sosial","Kami mengharapkan kehadiran pengurus OSIS... 24 Februari 2025... pukul 14.00... Pembentukan Panitia Porseni","Para pengurus OSIS Pertiwi... 24 Februari 2025... pukul 13.00... Ruang Media... Pembagian Kerja"], ans:2, exp:"Sesuai ilustrasi: tanggal 24 Feb 2025 ✓, pukul 13.00 ✓, ruang OSIS ✓, acara pembentukan panitia Porseni ✓. Hanya pilihan C yang sesuai semua." },
+    { q:"Maksud surat dinas permohonan peminjaman bus sekolah adalah....", opts:["Akan diadakan Wisata Pendidikan","Bus sekolah sebagai sarana transportasi","Mengajukan permohonan peminjaman bus sekolah","Wisata Pendidikan SMP Hidayatullah Surabaya"], ans:2, exp:"Kalimat inti surat: 'kami bermaksud mengajukan permohonan peminjaman bus sekolah' — ini adalah maksud/tujuan surat tersebut." },
+    { q:"Berdasarkan surat pribadi Shinta, bagian surat pribadi yang tepat adalah....", opts:["f–7","d–4","f–5","b–4"], ans:1, exp:"Dalam surat Shinta: (4) adalah bagian isi surat. Unsur d = Isi surat, dan angka 4 pada surat = bagian isi. Jadi d-4 yang tepat." },
+    { q:"Berdasarkan kutipan surat dinas PRAMUKA, bagian surat yang tepat adalah....", opts:["f–1","I–9","k–11","j–10"], ans:2, exp:"Dalam surat dinas tersebut: (1) adalah kepala surat (kop). Unsur k = identitas pengirim, angka 11 = kepala surat. Jadi k-11." },
+    { q:"Pernyataan yang sesuai dengan isi teks berita tentang narkoba adalah....", opts:["Indonesia adalah negara yang mayoritas penduduknya mengonsumsi narkoba","Narkoba adalah sesuatu yang biasa bagi warga Indonesia","Mayoritas pengguna narkoba di Indonesia adalah remaja","Pencandu narkoba di Indonesia mencapai seratus juta jiwa"], ans:2, exp:"Teks menyebutkan 'mayoritas pengguna narkoba di Indonesia adalah remaja' — ini tersurat langsung dalam teks." },
+    { q:"Pembetulan kata yang salah pada teks berita cuaca ekstrem, kecuali....", opts:["Kata februari ditulis huruf kecil, seharusnya huruf kapital","Kata pulau jawa ditulis huruf kecil, kata jawa seharusnya kapital","Kata badan meteorologi ditulis huruf kecil semua, seharusnya kapital","Kata pulau jawa ditulis dengan huruf besar"], ans:3, exp:"Pilihan D sendiri yang tidak benar: 'pulau jawa ditulis dengan huruf besar' adalah pembetulan yang salah kaprah. Yang seharusnya: 'Pulau Jawa' (J kapital). Pilihan D menyatakan sudah huruf besar padahal di teks masih kecil." },
+    { q:"Berdasarkan slogan 'SEKOLAHKU HIJAU SEKOLAHKU SEHAT', benar atau salah pernyataan secara berurutan adalah....", opts:["Benar-Salah-Salah","Benar-Benar-Salah","Benar-Salah-Benar","Salah-Salah-Benar"], ans:2, exp:"(1) Slogan mengajak menjaga kebersihan sekolah — Benar. (2) Memberi info persuasif agar membeli jasa — Salah (bukan iklan jasa). (3) Memberi motivasi menjaga kebersihan demi kesehatan — Benar." },
+    { q:"Persamaan isi kedua teks iklan (Featbar & Jasa Kurir Faster) yang tepat adalah....", opts:["Memberi informasi persuasif tentang suatu produk/jasa","Memberi informasi inspiratif tentang suatu produk/jasa","Memberi informasi yang bertujuan menyampaikan pesan dalam bentuk tulisan","Memberi informasi yang mengandung motivasi untuk khalayak ramai"], ans:0, exp:"Kedua teks adalah iklan yang sama-sama mempromosikan produk/jasa secara persuasif (mengajak konsumen untuk memilih produk mereka)." },
+    { q:"Kalimat utama paragraf tentang gerhana bulan adalah....", opts:["Fenomena proses terjadinya gerhana bulan","Perbedaan gerhana bulan dan gerhana matahari","Proses terjadinya gerhana bulan dan gerhana matahari","Salah satu fenomena alam yang terjadi di malam hari adalah gerhana bulan"], ans:3, exp:"Kalimat utama adalah kalimat yang mengandung gagasan pokok. Kalimat pertama: 'Salah satu fenomena alam... adalah gerhana bulan' adalah pernyataan utama yang dikembangkan." },
+    { q:"Struktur teks berdasarkan kutipan persuasif 'Biasakan diri untuk membuang sampah pada tempatnya...' adalah....", opts:["Pengenalan isu","Rangkaian argumen","Pernyataan ajakan","Penegasan kembali"], ans:2, exp:"Teks berisi ajakan 'Biasakan diri untuk...' dan menjelaskan manfaatnya. Ini adalah pernyataan ajakan yang disertai alasan." },
+    { q:"Tanggapan yang sesuai dengan isi infografis 'Gaya Hidup Bebas Sampah' adalah....", opts:["Luar biasa, ternyata nenek moyang kita telah menggunakan bahan kaca dan dedaunan untuk wadah makanan","Seharusnya kita harus mampu mengelola organik dengan tepat, salah satunya mendaur ulangnya","Hal yang perlu dilakukan untuk meminimalisasi sampah adalah mengurangi penggunaan barang berbahan plastik dan menggantinya dengan kaca dan logam","Tentunya barang berbahan plastik sangat mudah ditemui dan bisa kita manfaatkan"], ans:2, exp:"Infografis menyarankan mengurangi plastik dan beralih ke kaca/logam. Tanggapan C paling sesuai dengan isi infografis tersebut." },
+    { q:"Bagian yang tepat untuk melengkapi kerangka teks persuasi tentang hutan Indonesia adalah....", opts:["Maka, sebaiknya pemerintah tegas... Selamatkan hutan!","Sesungguhnya pemerintah sudah bertindak tegas terhadap pembalakan liar","Pada dasarnya alih fungsi hutan menjadi kawasan industri mencederai amanat konstitusi","Mari kita lestarikan satwa yang tergerus kawasan industri"], ans:0, exp:"Bagian 'penegasan ulang' harus berisi ajakan dan penegasan kembali tesis (negara wajib melindungi rakyat dan ekosistem). Pilihan A mengajak dan menegaskan kembali → tepat." },
+    { q:"Kata bentukan yang tepat untuk melengkapi: 'Setiap individu [...] individu yang lain dalam menjalani kegiatan sehari-hari.'", opts:["Membutuhkan","Menggunakan","Memberikan","Memerlukan"], ans:0, exp:"Konteks kalimat: manusia adalah makhluk sosial yang tidak bisa hidup sendiri → membutuhkan orang lain. 'Membutuhkan' paling tepat untuk menyatakan kebutuhan terhadap orang lain." },
+    { q:"Bagian koda dalam kutipan teks fabel Harimau, Kelinci, Kambing, dan Kerbau ditunjukkan oleh nomor....", opts:["(1)","(2)","(3)","(4)"], ans:3, exp:"Koda = bagian penutup yang berisi akibat/penyelesaian akhir dan amanat. Paragraf 4: Harimau diinjak-injak kerbau sampai tidak berdaya → penyelesaian akhir → koda." },
+    { q:"Keunggulan karya yang diulas dalam teks ulasan tentang pementasan Gundala adalah....", opts:["Kelihaian pemeran Gundala dalam beberapa adegan terutama saat kondisi naik","Banyak di antara pemain sangat disiplin dalam memerankan tokohnya","Pementasan hari pertama oleh Butet Kartaredjasa memukau dengan kesan dramatis di akhir","Konsistensi dan keadaan prima dari Butet Kartaredjasa yang menutupi kelemahan dalam karya"], ans:3, exp:"Satu-satunya pujian dalam ulasan tersebut: 'ada Butet Kartaredjasa, yang bermain prima dan konsisten'. Ini adalah keunggulan yang disebutkan penulis." },
+    { q:"Benar atau Salah pernyataan tentang teks Badan POM dan Covid-19 secara berurutan adalah....", opts:["Benar-Salah-Salah-Benar","Benar-Salah-Benar-Benar","Salah-Salah-Benar-Benar","Benar-Salah-Benar-Salah"], ans:0, exp:"(1) 'Badan POM memberikan perhatian penuh' — tersurat, Benar. (2) 'Dukungan POM membantu satgas' — tersirat/tidak tersurat langsung, Salah. (3) 'Langkah preventif' — tersurat, tapi ini bukan pernyataan mandiri, Salah. (4) 'BBPOM Surabaya bekerja sama dengan BBTKLPP' — tersurat, Benar." },
+    { q:"Variasi kalimat yang sesuai dengan teks tentang laki-laki tua yang pergi ke kota adalah....", opts:["Laki-laki tua itu meninggalkan desanya untuk mencari pekerjaan apa saja yang bisa dikerjakan","Dengan membawa alat-alat pertukangan, laki-laki tua itu pergi ke kota di pagi hari untuk mencari pekerjaan.","Laki-laki tua itu meninggalkan desanya setelah menjalankan salat subuh untuk mencoba keberuntungan di kota","Dengan berjalan kaki, laki-laki tua itu pergi ke kota setelah menjalankan salat subuh"], ans:1, exp:"Teks menyebut: laki-laki tua → pergi ke kota → membawa alat pertukangan → pagi hari (saat mentari mulai nampak). Pilihan B mencakup semua elemen yang tersurat." },
+    { q:"Gagasan pokok teks tentang punakawan dalam wayang Jawa adalah....", opts:["Keluarga yang jenaka dalam wayang jawa","Sebuah keluarga yang terdiri empat anggota","Keluarga dengan karakter kuat dalam wayang jawa","Semar, Petruk, Gareng, dan Bagong adalah punakawan"], ans:2, exp:"Kalimat pertama: 'ada sebuah keluarga yang memiliki karakter kuat yang disebut punakawan' — ini gagasan utama yang dikembangkan sepanjang paragraf." },
+    { q:"Komentar yang tepat terhadap teks fabel keledai yang melompat ke jurang adalah....", opts:["Isi cerita bagus karena memberi contoh akibat tidak menuruti nasihat","Isi cerita kurang menarik karena tidak ada latar tempatnya","Isi cerita bagus hanya tidak ada nilai moral yang patut dicontoh","Isi cerita tidak masuk akal sehingga tidak patut ditiru"], ans:0, exp:"Fabel keledai memberi pelajaran: jangan keras kepala dan tidak menuruti nasihat. Komentar A tepat karena mengakui ada nilai moral dari cerita." },
+    { q:"Tindakan terpuji pemilik keledai dalam teks fabel tersebut adalah....", opts:["Memberi keledai makanan dan minuman saat di perjalanan","Cepat menangkap dan menarik ekor keledai agar tidak melompat ke jurang","Mencari jalan yang mudah dilalui untuk keledai miliknya","Membiarkan keledai berlari menemui bapak dan ibunya"], ans:1, exp:"Tindakan terpuji = tindakan positif. Pemilik keledai dengan cepat menangkap ekornya untuk mencegah keledai jatuh ke jurang → tindakan penyayang hewan." },
+    { q:"Watak tokoh musang pada kutipan fabel kerbau dan musang adalah....", opts:["Meremehkan","Pembohong","Humoris","Ramah"], ans:0, exp:"Musang menertawai dan meledek kerbau: 'jika ini memang milikmu mengapa kau tidak mengambilnya?', 'tubuhmu tidak akan mudah...' → musang meremehkan kerbau." },
+    { q:"Makna simbol 'cengkeraman ketakutan' pada kutipan fabel tikus dan kucing adalah....", opts:["Ketakutan tidak beralasan","Cakar yang menakutkan","Hidup penuh ketakutan","Takut karena sesuatu"], ans:2, exp:"'Cengkeraman ketakutan' bukan makna harfiah cakar, melainkan melambangkan kondisi hidup dalam ketakutan yang terus-menerus → hidup penuh ketakutan." },
+    { q:"Nilai moral yang terdapat pada kutipan cerpen si mbok yang mengajarkan membatik kepada Kinanthi adalah....", opts:["Setiap usaha harus disertai dengan doa dan kejujuran","Sabar dalam berusaha merupakan kunci keberhasilan","Melakukan sesuatu harus disertai dengan ketelitian","Putus asa hanya akan menambah beban hidup"], ans:1, exp:"Si mbok sabar membimbing Kinanthi yang kesulitan membatik sambil terus memberi semangat. Nilai moral: kesabaran dalam berusaha adalah kunci keberhasilan." },
+    { q:"Amanat kutipan teks fabel anak gajah dan kancil yang mencari ibu adalah....", opts:["Apabila ada anggota keluarga yang hilang, carilah di tepi danau","Apabila orang lain sedang dilanda musibah, kita harus menasihati","Apabila ada anggota keluarga yang hilang, maka harus bersedih","Apabila orang lain sedang dilanda musibah, kita harus membantu"], ans:3, exp:"Kancil menawarkan bantuan kepada anak gajah yang sedih. Amanat: ketika orang lain mengalami kesulitan/musibah, kita harus membantu." },
+    { q:"Makna simbol kata yang ditulis miring 'berpikir, bagaimana caranya mendapatkan ketimun' pada teks kancil adalah....", opts:["Rajin","Rakus","Malas","Cerdik"], ans:3, exp:"Kancil dalam cerita rakyat dikenal sebagai hewan yang cerdik/pandai berstrategi. 'Berpikir bagaimana caranya' menggambarkan kecerdikan kancil." },
+    { q:"Nilai agama dalam kutipan hikayat batu dan pohon ara adalah....", opts:["Menceritakan nasihat orang tua","Sang Khalik memberi kekuatan kepada manusia","Manusia jauh melebihi segala makhluk di muka bumi ini","Jadilah manusia yang bijak dan tidak dipermainkan oleh hidup"], ans:1, exp:"Nilai agama berhubungan dengan kepercayaan terhadap Tuhan. 'Sang Khalik memberikan kekuatan kepada manusia' adalah nilai agama — keyakinan bahwa Tuhan memberi kekuatan." },
+  ]
+},
+
+// ── SET 3: US-UM Lanjutan ──────────────────────────────────────
+{
+  title: "US-UM Kelas IX (Set B)",
+  questions: [
+    { q:"Hal yang patut diteladani dari tokoh Kak Seto (psikolog anak) adalah....", opts:["Penyayang terhadap sesama","Bekerja keras dalam kehidupannya","Siap prihatin dalam membawakan acara","Menjadi ketua Komite Perlindungan Anak"], ans:1, exp:"Kak Seto pernah menjadi tukang batu, pengaduk semen, dan tukang parkir — menunjukkan kerja keras dalam kehidupannya sebelum sukses." },
+    { q:"Keistimewaan tokoh N Wayan Mertayani pada teks tersebut adalah....", opts:["Membantu ibunya berjualan","Pemenang World Press Photo","Melakukan pemotretan berkali-kali","Mencari barang rongsokan di pantai"], ans:1, exp:"Keistimewaan/prestasi luar biasa Mertayani: memenangkan World Press Photo yang diadakan Yayasan Anne Frank di Belanda — diakui dunia internasional." },
+    { q:"Sikap/tindakan tokoh Mertayani yang patut diteladani adalah....", opts:["Ia rajin dan gemar menabung","Ia gemar menabung dan disiplin","Ia rajin dan tidak mudah putus asa","Ia tidak mudah putus asa dan hemat"], ans:2, exp:"Teks menyebutkan secara eksplisit: 'Ia rajin dan tidak mudah putus asa' — ini yang tersurat dan patut diteladani." },
+    { q:"Pendapat penulis terhadap tokoh Mertayani adalah....", opts:["Mertayani memiliki foto sederhana dan menjadi pemenang","Mertayani meminjam kamera foto Mrs. Dolly Amarhoseija","Mertayani membantu ibunya berjualan setelah pulang sekolah","Mertayani melakukan pemotretan yang berkali-kali ternyata tidak sia-sia"], ans:3, exp:"Penulis mengagumi Mertayani karena usahanya tidak sia-sia — foto sederhananya memenangkan kompetisi kelas dunia. Ini adalah pendapat/penilaian penulis." },
+    { q:"Tindakan yang dapat diteladani dari tokoh tenis Wailan Walalangi adalah....", opts:["Bangga dapat menjadi lawan bertanding petenis dunia","Menjadi atlet tenis nasional yang turun di grup Piala Davis","Bangga dapat mengulang prestasi indonesia yang pernah dicapai tahun 1983","Tetap bersemangat dan bangga meskipun kalah bertanding"], ans:3, exp:"Meski kalah 2-6, 4-6, 1-6 dari jerman, Wailan 'tak hilang semangat' dan 'bangga' — sikap sportivitas yang patut diteladani." },
+    { q:"Alasan ketidaktepatan penggunaan ejaan pada kalimat 'Dewi sartika meninggal... dimakamkan dipemakaman cigagadon' adalah....", opts:["Kata Cigagadon seharusnya cigagadon karena bukan nama diri","Kata dimakamkan seharusnya ditulis di makamkan karena di- sebagai kata depan","Kata Desa seharusnya ditulis desa supaya sesuai kaidah EYD","Kata dipemakaman seharusnya ditulis di pemakaman karena di adalah kata depan"], ans:3, exp:"'Di' sebagai kata depan (menunjukkan tempat) ditulis terpisah: 'di pemakaman'. Tapi 'dimakamkan' (kata kerja) sudah benar. Yang salah adalah 'dipemakaman' → seharusnya 'di pemakaman'." },
+    { q:"Perbaikan paragraf biografi N.H. Dini agar menjadi padu adalah mengganti kalimat nomor (2) menjadi....", opts:["Bakat menulisnya diperoleh dari kedua orang tuanya","Ia gemar menulis sejak berusia sembilan tahun","Buku-buku pelajarannya penuh dengan coretan tangannya","Sejak saat itu, N.H Dini menekuni dunia tulis-menulis"], ans:1, exp:"Paragraf membahas N.H. Dini sebagai penulis yang sudah menulis sejak kecil (kalimat 3 menyebut 'pada usia itu'). Kalimat 2 harus mendukung topik itu → 'Ia gemar menulis sejak berusia sembilan tahun' paling koheren." },
+    { q:"Simpulan isi teks tentang Cut Nyak Dien yang berjuang melawan Belanda adalah....", opts:["Cut Nyak Dien wanita pejuang yang bisa menggerakkan perlawanan rakyat Aceh","Cut Nyak Dien merupakan wanita pejuang yang menginspirasi rakyat Aceh","Cut Nyak Dien merupakan wanita pejuang yang memiliki semangat juang membara","Sosok wanita pejuang yang tidak menghiraukan kesedihan diri sendiri"], ans:2, exp:"Paragraf menekankan 'semangat menyala', 'semangat juang' Cut Nyak Dien yang tetap berjuang meski suaminya gugur. Simpulan paling tepat: memiliki semangat juang membara." },
+    { q:"Urutan kalimat biografi Soekarno-Hatta agar menjadi teks biografi yang baik adalah....", opts:["(1),(2),(3),(4),(5)","(1),(2),(4),(3),(5)","(1),(4),(2),(3),(5)","(1),(4),(3),(2),(5)"], ans:1, exp:"Urutan kronologis: (1) Proklamasi kemerdekaan → (2) Diangkat jadi presiden/wapres → (4) Terlibat perang melawan Belanda → (3) Dibuang ke Parapat dan Bangka → (5) Belanda akui kedaulatan." },
+    { q:"Komentar terhadap isi teks fabel roda kereta dan kerbau yang bekerja keras adalah....", opts:["Isi cerita sering terjadi pada kehidupan kita, yaitu selalu percaya diri bila mendapat tugas","Dilihat dari tokohnya, roda kereta merupakan tokoh protagonis karena sifatnya yang kurang baik","Isi cerita sulit diwujudkan dalam kehidupan karena orang kota lebih bersifat individualis","Sikap sepasang kerbau patut kita tiru karena dalam bekerja tak pernah mengeluh"], ans:3, exp:"Kerbau menarik beban berat tanpa mengeluh sementara roda berciut-ciut. Komentar yang tepat: sikap kerbau (tidak mengeluh saat bekerja) patut diteladani." },
+    { q:"Realitas kehidupan yang terdapat dalam kutipan cerpen Apin yang menjual koran adalah....", opts:["Tergiur bujukan teman untuk mengadu nasib di kota besar","Menantang kehidupan ibu kota, berjuang sampai titik darah penghabisan","Kerasnya tantangan kehidupan ibu kota membuat orang jera","Kehidupan ibu kota yang kejam membuat orang tak beruntung"], ans:0, exp:"Teks menyebut: 'tergiur oleh bujukan temannya, akhirnya ia meninggalkan desanya' — ini adalah realita sosial yang nyata terjadi di masyarakat." },
+    { q:"Nilai moral pada kutipan cerita Dani dan ayahnya yang memberikan uang kepada pengemis adalah....", opts:["Dani menjawab pertanyaan ayah, satu per satu","Dani mulai berpikir ayah pasti mempermainkannya","Hatinya tersentuh melihat pengemis di jalan itu","Ayah merogoh kantongnya, memberikan sejumlah uang"], ans:2, exp:"Nilai moral bukan sekadar narasi tindakan, tapi pelajaran yang bisa dipetik. 'Hatinya tersentuh' menunjukkan nilai empati dan kepedulian terhadap sesama → nilai moral." },
+    { q:"Nilai moral pada kutipan cerita Raja Singa yang mengusir cacing adalah....", opts:["Siapa yang kuat dialah yang berkuasa","Kita boleh memberikan hukuman agar tidak terulang lagi","Keputusan apa pun harus diambil dengan kepala dingin","Memutuskan sesuatu dilandasi oleh perasaan suka dan tidak suka"], ans:2, exp:"Raja Singa mengusir cacing hanya karena rasa jijik anaknya — keputusan yang emosional. Nilai moral: keputusan harus diambil dengan kepala dingin, bukan emosi." },
+    { q:"Kebiasaan positif tokoh Rendy dalam cerita adalah....", opts:["Selalu menang dalam bertanding","Membuat bola dari kaos kaki","Rajin berlatih sepakbola","Banyak ide kreatif"], ans:3, exp:"Teks menyebut: 'Setiap hari Rendy mempunyai ide kreatif agar dapat bermain bola' — ini adalah kebiasaan positifnya yang disebutkan berulang dan menjadi kunci prestasinya." },
+    { q:"Relevansi isi dongeng tentang semut yang menyimpan roti dengan kehidupan sekarang adalah....", opts:["Seorang raja yang sangat sibuk sering melupakan kehidupan rakyat kecil","Raja yang sangat suka mengamati kehidupan rakyatnya untuk keteladanan","Cobaan untuk seorang rakyat kecil diumpamakan semut yang masuk tabung","Sifat hemat semut dapat dijadikan contoh untuk kehidupan manusia"], ans:3, exp:"Semut menyimpan separuh roti sebagai cadangan makanan — mencerminkan sifat hemat. Relevansinya: manusia bisa belajar hemat dari perilaku semut." },
+    { q:"Kebiasaan tokoh raja berdasarkan kutipan cerita anak adalah....", opts:["Suka memuji","Penuh perhatian","Rela berkorban","Menepati janji"], ans:1, exp:"Raja memberi tabung berisi roti kepada semut dan kembali membukanya — menunjukkan raja memperhatikan dan peduli terhadap semut kecil → penuh perhatian." },
+    { q:"Kebiasaan tokoh semut dalam kutipan cerita adalah....", opts:["Kuat mengangkat beban","Merasa binatang paling hebat","Selalu membanggakan dirinya","Mudah tergelincir dalam lumpur"], ans:2, exp:"'Sang semut selalu membanggakan dirinya' — ini disebutkan sebagai kebiasaan yang dilakukan berulang-ulang (kata 'selalu')." },
+    { q:"Amanat cerita Kolin yang terburu-buru mendahului Beti dan Bebe adalah....", opts:["Jangan terburu-buru jika tidak ingin mencelakakan diri sendiri dan orang lain","Bekerja jangan lamban agar tidak mengganggu orang lain","Lakukan pekerjaan tanpa saling mendahului","Minta maaflah jika melakukan kesalahan"], ans:0, exp:"Akibat Kolin terburu-buru mendahului, es krim tumpah dan mengotori lantai. Amanat: jangan terburu-buru karena bisa merugikan diri sendiri dan orang lain." },
+    { q:"Pesan berdasarkan kutipan cerpen Pak Hamid yang mencari kekayaan dengan pergi ke makam keramat adalah....", opts:["Tak mungkin orang mendapatkan kekayaan hanya dengan membaca mantra di kuburan","Setiap usaha pasti ada hasilnya meskipun usaha itu tidak masuk akal","Orang yang mau mencari harta tanpa kerja keras tidak akan berhasil","Siapa pun berhak melakukan usaha demi yang diinginkan"], ans:2, exp:"Pak Hamid mencari kekayaan dengan cara yang tidak logis (mantra di kuburan). Pesan: mencari harta tanpa kerja keras yang nyata tidak akan berhasil." },
+    { q:"Keunggulan kutipan cerita motor yang jatuh ke jurang adalah....", opts:["Akhir cerita mengejutkan sehingga memberikan kesan mendalam","Isi ceritanya menginspirasi pembaca untuk berhati-hati","Banyak menggunakan kiasan","Akhir cerita mudah ditebak oleh pembaca"], ans:0, exp:"Cerita berakhir dengan 'seperti masuk jurang. Di sini sangat gelap' — ending tak terduga yang mengejutkan dan meninggalkan kesan mendalam bagi pembaca." },
+    { q:"Tindakan terpuji yang dilakukan tokoh ikan mujair dalam fabel ular merah adalah....", opts:["Segera teringat perjanjian yang pernah dijelaskan oleh ibunya","Dengan sangat terpaksa menyerahkan anaknya kepada ikan mujair","Hanya mengurung anak ular dan akan dikembalikan lagi kepada induknya","Membunuh anak ular sebagai ganti nyawa anaknya yang dimakan si ular merah"], ans:2, exp:"Ikan mujair tidak membalas dendam dengan membunuh anak ular, melainkan hanya mengurung dan berencana mengembalikannya → tindakan terpuji: pemaaf dan tidak dendam." },
+    { q:"Realitas sosial yang kita temukan dari penggalan cerpen Citra di rumah sakit adalah....", opts:["Pasien rumah sakit lebih banyak perempuan dan anak-anak","Orang tua yang terlalu sibuk sampai tidak memerhatikan anaknya yang dirawat di rumah sakit","Seorang ibu yang harus menafkahi anaknya sampai lupa waktu","Banyak pasien yang datang silih berganti di rumah sakit"], ans:1, exp:"Dialog: 'mama harus segera berangkat ke kantor' padahal anaknya dirawat — ini menggambarkan realita sosial orang tua yang terlalu sibuk bekerja sampai mengabaikan anak yang sakit." },
+    { q:"Tanggapan yang tepat untuk cerita ibu yang meninggalkan anaknya di rumah sakit adalah....", opts:["Seorang ibu sebaiknya mendampingi putranya yang sedang sakit sampai pulih","Orang tua yang terlalu sibuk sampai tidak memerhatikan anaknya","Seorang ibu yang harus menafkahi anaknya sampai lupa waktu","Pasien yang datang silih berganti di rumah sakit sebaiknya ditunggui"], ans:0, exp:"Tanggapan harus berisi saran/penilaian yang logis dan konstruktif. Pilihan A memberikan saran yang tepat: ibu seharusnya menemani anak yang dirawat." },
+    { q:"Nilai kehidupan positif dalam kutipan cerpen Fajar yang berbohong tentang kekayaan keluarganya adalah....", opts:["Pengorbanan seorang sahabat terpercaya","Seseorang yang segera sadar akan kesalahannya","Kebohongan yang akhirnya terkuak","Seseorang yang tersiksa akibat kelakuannya"], ans:1, exp:"Fajar menyadari kebohongannya dan meminta maaf keesokan harinya. Nilai positif: seseorang yang segera menyadari dan mengakui kesalahannya." },
+    { q:"Makna kata 'otodidak' pada teks biografi Hamka adalah....", opts:["Belajar di sebuah pesantren","Belajar sendiri tanpa bersekolah","Belajar dengan cara memanggil guru","Menggunakan buku-buku dari luar negeri"], ans:1, exp:"Otodidak = autodidact = belajar sendiri tanpa bimbingan formal/guru. Hamka mempelajari sejarah Islam dan sastra secara otodidak = belajar sendiri." },
+    { q:"Simpulan paragraf tentang media dan perlindungan anak di era digital adalah....", opts:["Banyak anak kurang memahami dampak buruk internet","Dunia maya merupakan hal yang berdampak buruk bagi anak","Penelitian Unicef mengenai dampak yang menimpa anak dari internet","Media mengingatkan masyarakat untuk melindungi anak dari dampak internet"], ans:3, exp:"Kalimat pertama paragraf adalah ide utama: 'media berperan besar untuk mengingatkan masyarakat akan pentingnya perlindungan anak'. Ini juga merupakan simpulan." },
+    { q:"Pendapat yang mendukung penggunaan motor oleh pelajar di bawah umur ditandai nomor....", opts:["(1)","(2)","(3)","(4)"], ans:1, exp:"Kalimat (2): 'penggunaan motor bagi pelajar menghemat biaya dan waktu' — ini adalah argumen yang mendukung (pro) penggunaan motor oleh pelajar." },
+    { q:"Pendapat kontra pada kutipan teks tentang televisi ditandai nomor....", opts:["(1)","(2)","(3)","(4)"], ans:3, exp:"Kalimat (4): 'tayangan televisi juga dapat merugikan pelajar karena dapat membuat mereka malas belajar' — ini adalah argumen kontra (negatif) terhadap televisi." },
+    { q:"Masalah untuk bahan diskusi yang paling tepat berdasarkan teks tentang konflik PSSI dan pemerintah adalah....", opts:["Bagaimana menyelesaikan konflik antara PSSI dan pemerintah?","Apakah konflik antara PSSI dan pemerintah dapat terselesaikan?","Bagaimana konflik itu terjadi?","Semua Salah"], ans:0, exp:"Pertanyaan diskusi yang baik harus mendorong pembahasan solusi/pemecahan masalah. 'Bagaimana menyelesaikan konflik?' paling tepat sebagai bahan diskusi yang produktif." },
+    { q:"Kekurangan yang terdapat dalam penggalan teks diskusi tentang membaca komik adalah....", opts:["Harus ada koma setelah kata menganggap","Tidak boleh ada koma setelah konjungsi selain itu","Tidak boleh ada koma setelah kata mereka","Tidak boleh ada koma setelah kata mendidik"], ans:1, exp:"Konjungsi antarkalimat (selain itu, namun, oleh karena itu) tidak diikuti koma jika berada di awal kalimat baru. Namun jika ada, itu adalah kelebihan tanda baca." },
+    { q:"Kalimat persetujuan yang sesuai dengan pendapat bahwa Andrea Hirata adalah novelis produktif adalah....", opts:["Saya sependapat dengan anda karena novel-novel yang ditulis Andrea pun selalu menjadi best seller","Saya setuju dengan pendapat anda","Pendapat anda memang masuk akal, jadi tidak ada salahnya saya setuju","Saat ini Andrea Hirata akan meluncurkan dua novel terbaru yang ia buat"], ans:0, exp:"Kalimat persetujuan yang baik harus menyatakan setuju DAN menyertakan alasan yang mendukung. Pilihan A paling lengkap: setuju + alasan (novel-novelnya best seller)." },
+    { q:"Teks diskusi drama tentang protes terhadap kepala sekolah mempunyai kekurangan karena....", opts:["Tidak ada argumen pro yang mendukung pernyataan Reni","Tidak ada bagian simpulan yang merupakan jalan tengah dari isu yang dibahas","Tidak ada argumen kontra yang menolak pernyataan reni","Tidak ada pendahuluan yang membuat isu yang dibahas"], ans:1, exp:"Teks diskusi yang baik harus memiliki: pendahuluan, argumen pro, argumen kontra, dan simpulan/solusi. Percakapan tersebut tidak memiliki simpulan/jalan tengah." },
+    { q:"Simpulan paragraf kedua teks tentang masa orientasi sekolah (PLS) adalah....", opts:["Lingkungan yang nyaman dambaan semua siswa","Adanya pergantian nama kegiatan dari MOS menjadi PLS","Pengenalan lingkungan baru sangat penting untuk siswa baru","Lingkungan sekolah terbagi menjadi dua: lingkungan fisik dan sosial"], ans:2, exp:"Paragraf 2 membahas manfaat PLS: siswa yang mengenal lingkungan dengan baik akan nyaman. Simpulan: pengenalan lingkungan baru sangat penting untuk siswa baru." },
+    { q:"Pernyataan yang merupakan argumen pendukung polisi tidur pada teks tersebut adalah....", opts:["(1)","(3)","(8)","(10)"], ans:2, exp:"Kalimat (8): 'harus diakui, polisi tidur menciptakan suasana keamanan jalan dan keselamatan lingkungan' — ini argumen PRO/pendukung keberadaan polisi tidur." },
+    { q:"Keistimewaan tokoh Ari Wulandari pada kutipan biografi tersebut adalah....", opts:["Rajin membaca buku","Gemar menulis sejak kecil","Sebagai editor di Multivision Plus","Meraih beberapa kejuaraan nasional"], ans:3, exp:"Keistimewaan = hal yang membuat tokoh luar biasa/berbeda. Memenangkan berbagai lomba menulis tingkat nasional adalah prestasi yang paling menonjol dan luar biasa." },
+    { q:"Sifat baik yang diteladani dari Hamka adalah....", opts:["Rajin membaca dan bertukar pikiran","Pemidato yang andal dan berbakat","Mahir berbahasa arab dan suka penelitian","Mengasah bakatnya dengan melakukan penelitian"], ans:0, exp:"Teks menyebut: 'Hamka juga rajin membaca dan bertukar pikiran dengan tokoh-tokoh terkenal' — ini disebut secara eksplisit sebagai sifat baik yang bisa diteladani." },
+    { q:"Sikap yang dapat diteladani dari tokoh Adisucipto adalah....", opts:["Pemberani dan pantang menyerah","Tekun dan rela berkorban","Nekat dan pemberani","Cerdas dan tekun"], ans:0, exp:"Adisucipto nekat menerbangkan pesawat tua demi memompa semangat rakyat, terus berjuang meski kondisi serba kekurangan. Ini menunjukkan keberanian dan pantang menyerah." },
+    { q:"Keunggulan tokoh William Wongso berdasarkan ilustrasi biografi adalah....", opts:["Menjadi kuliner yang berpengetahuan luas tentang masakan","Sejak kecil diajari untuk menikmati cita rasa aneka masakan","Ketertarikan pada bermacam-macam masakan Indonesia","Tertarik pada masakan mancanegara"], ans:0, exp:"Keunggulan tokoh = hal yang menonjol dan membuat ia istimewa. William Wongso menjadi ahli kuliner dengan pengetahuan luas — ini keunggulannya sebagai profesi/keahlian." },
+    { q:"Hal yang dapat diteladani dari tokoh William Wongso adalah....", opts:["Sejak kecil bercita-cita menjadi dokter","Memiliki jiwa nasionalisme yang tinggi","Mencoba berbagai citarasa masakan","Menjadi ahli kuliner yang berpengalaman"], ans:1, exp:"Teks membuka dengan 'kiprahnya berupa mengenalkan masakan sebagai wujud nasionalisme yang tinggi' — nilai yang bisa diteladani adalah nasionalisme dalam berkarya." },
+    { q:"Makna kata 'cemerlang' (dicetak miring) pada teks biografi Agus Salim adalah....", opts:["Cerdas","Bagus","Indah","Bersih"], ans:0, exp:"'Otak cemerlang' = otak yang sangat cerdas/brilian. Cemerlang dalam konteks ini bermakna cerdas/jenius, bukan indah atau bersih." },
+  ]
+}
+
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let currentSet = null;
+let currentQ = 0;
+let selected = null;
+let submitted = false;
+let answers = []; // -1 = unanswered, index = user answer
+let setIndex = 0;
+
+// ═══════════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════════
+function startQuiz(idx) {
+  setIndex = idx;
+  currentSet = SETS[idx];
+  currentQ = 0;
+  selected = null;
+  submitted = false;
+  answers = new Array(currentSet.questions.length).fill(-1);
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  document.getElementById('quizTitleSm').textContent = currentSet.title;
+  renderQuestion();
+}
+
+function goHome() {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('home').style.display = 'flex';
+}
+
+function retryQuiz() {
+  startQuiz(setIndex);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER QUESTION
+// ═══════════════════════════════════════════════════════════════
+function renderQuestion() {
+  const q = currentSet.questions[currentQ];
+  const total = currentSet.questions.length;
+  submitted = false;
+  selected = null;
+
+  // progress
+  const pct = ((currentQ) / total) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${currentQ + 1} / ${total}`;
+
+  // buttons
+  document.getElementById('btnSubmit').disabled = true;
+  document.getElementById('btnSubmit').style.display = 'inline-flex';
+  document.getElementById('btnNext').disabled = true;
+  const isLast = currentQ === total - 1;
+  document.getElementById('btnNext').textContent = isLast ? 'Lihat Hasil' : 'Soal Berikutnya';
+
+  // render
+  document.getElementById('quizBody').innerHTML = `
+    <div class="question-card">
+      <div class="q-number">Soal ${currentQ + 1} dari ${total}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="options">
+        ${q.opts.map((o, i) => `
+          <button class="option" id="opt${i}" onclick="selectOption(${i})">
+            <span class="option-letter">${['A','B','C','D'][i]}</span>
+            <span>${o}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="explanation-box" id="expBox">
+        <strong>📖 Penjelasan:</strong> ${q.exp}
+      </div>
+    </div>
+  `;
+}
+
+function selectOption(i) {
+  if (submitted) return;
+  selected = i;
+  document.querySelectorAll('.option').forEach((el, idx) => {
+    el.classList.toggle('selected', idx === i);
+  });
+  document.getElementById('btnSubmit').disabled = false;
+}
+
+function submitAnswer() {
+  if (selected === null || submitted) return;
+  submitted = true;
+  answers[currentQ] = selected;
+  const q = currentSet.questions[currentQ];
+  const correct = q.ans;
+
+  document.querySelectorAll('.option').forEach((el, i) => {
+    el.onclick = null;
+    el.classList.remove('selected');
+    if (i === correct) {
+      el.classList.add('correct');
+    } else if (i === selected && selected !== correct) {
+      el.classList.add('wrong');
+    } else {
+      el.classList.add('dimmed');
+    }
+  });
+
+  document.getElementById('expBox').classList.add('visible');
+  document.getElementById('btnSubmit').style.display = 'none';
+  document.getElementById('btnNext').disabled = false;
+}
+
+function nextQuestion() {
+  const total = currentSet.questions.length;
+  if (currentQ < total - 1) {
+    currentQ++;
+    renderQuestion();
+    window.scrollTo(0, 0);
+  } else {
+    showResult();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RESULT
+// ═══════════════════════════════════════════════════════════════
+function showResult() {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+
+  const qs = currentSet.questions;
+  let correct = 0;
+  answers.forEach((a, i) => { if (a === qs[i].ans) correct++; });
+  const wrong = answers.filter(a => a !== -1).length - correct;
+  const total = qs.length;
+  const score = Math.round((correct / total) * 100);
+
+  document.getElementById('scoreNum').textContent = score;
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statWrong').textContent = wrong;
+  document.getElementById('statTotal').textContent = total;
+
+  let title, sub;
+  if (score >= 90) { title = '🎉 gelo jing'; sub = 'Nilai lu bisa banggain ortu. kelass'; }
+  else if (score >= 75) { title = '👍 Bagus'; sub = 'Hampir banggain ortu, tinggal hoki cap cip cup nya'; }
+  else if (score >= 60) { title = '😊 idiot!'; sub = 'otak lu dongo apa gimana ajg ko bisa jelek kali nilainya,belajar bego'; }
+  else { title = 'Bego banget ajg'; sub = 'lu kalo ada tugas pilgan di kerjain bukan di asal pencet cap cip cup ajg gila lu yak'; }
+
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultSub').textContent = sub;
+
+  // review
+  const letters = ['A','B','C','D'];
+  let html = '';
+  qs.forEach((q, i) => {
+    const ua = answers[i];
+    const isCorrect = ua === q.ans;
+    html += `
+      <div class="review-item ${isCorrect ? 'r-correct' : 'r-wrong'}">
+        <span class="review-badge ${isCorrect ? 'badge-correct' : 'badge-wrong'}">${isCorrect ? '✓ Benar' : '✗ Salah'}</span>
+        <div class="review-q"><strong>Soal ${i+1}:</strong> ${q.q}</div>
+        <div class="review-answer-row">
+          ${!isCorrect ? `<span class="review-your">Jawaban lo: ${ua >= 0 ? letters[ua]+'. '+q.opts[ua] : 'Tidak dijawab'}</span>` : ''}
+          <span class="review-correct-ans">Jawaban benar: ${letters[q.ans]}. ${q.opts[q.ans]}</span>
+        </div>
+        ${!isCorrect ? `<div class="review-explanation"><strong>📖 Penjelasan:</strong> ${q.exp}</div>` : ''}
+      </div>
+    `;
+  });
+  document.getElementById('reviewList').innerHTML = html;
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
