@@ -176,7 +176,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
-  .stat-chip{
+  .stat-grid .stat-chip{
     background: var(--bg);
     border-radius: var(--radius-sm);
     padding: 12px 14px;
@@ -402,7 +402,8 @@
 
         <div class="field">
           <label for="amountInput">Nominal (minimal Rp12.500)</label>
-          <input type="number" id="amountInput" placeholder="Contoh: 15000" min="1" required>
+          <!-- Diganti type="text" biar bisa dipasangin format titik ribuan otomatis -->
+          <input type="text" id="amountInput" placeholder="Contoh: 15.000" required>
           <p class="hint">Boleh lebih dari minimal, nggak boleh kurang niatnya 😉</p>
         </div>
 
@@ -465,18 +466,28 @@
     return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
   }
 
-  async function loadEntries(){
+  // Efek ketik otomatis nambahin titik ribuan bngst
+  amountInput.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/\D/g, ''); 
+    if (value) {
+      e.target.value = Number(value).toLocaleString('id-ID');
+    } else {
+      e.target.value = '';
+    }
+  });
+
+  function loadEntries(){
     try{
-      const result = await window.storage.get(STORAGE_KEY, false);
-      return result ? JSON.parse(result.value) : [];
+      const data = localStorage.getItem(STORAGE_KEY);
+      return data ? JSON.parse(data) : [];
     }catch(err){
       return [];
     }
   }
 
-  async function saveEntries(entries){
+  function saveEntries(entries){
     try{
-      await window.storage.set(STORAGE_KEY, JSON.stringify(entries), false);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
     }catch(err){
       console.error('Gagal menyimpan data', err);
     }
@@ -518,24 +529,31 @@
     }
   }
 
-  async function init(){
-    const entries = await loadEntries();
+  function init(){
+    const entries = loadEntries();
     render(entries);
   }
 
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const amount = Number(amountInput.value);
+    // Bersihin titiknya dulu pas mau disimpan biar kebaca angka murni
+    const rawAmount = amountInput.value.replace(/\./g, '');
+    const amount = Number(rawAmount);
+    
     if(!amount || amount <= 0) return;
+    if(amount < 12500) {
+      alert('Minimal nabung Rp12.500 nying, kurang niat lu!');
+      return;
+    }
 
-    const entries = await loadEntries();
+    const entries = loadEntries();
     entries.push({
       id: Date.now().toString(36),
       date: dateInput.value,
       amount: amount,
       source: sourceInput.value
     });
-    await saveEntries(entries);
+    saveEntries(entries);
     render(entries);
 
     toast.classList.add('show');
@@ -545,18 +563,17 @@
     dateInput.valueAsDate = new Date();
   });
 
-  historyList.addEventListener('click', async (e) => {
+  historyList.addEventListener('click', (e) => {
     const btn = e.target.closest('.del-btn');
     if(!btn) return;
     const id = btn.getAttribute('data-id');
-    const entries = await loadEntries();
+    const entries = loadEntries();
     const filtered = entries.filter(entry => entry.id !== id);
-    await saveEntries(filtered);
+    saveEntries(filtered);
     render(filtered);
   });
 
   init();
 </script>
-
 </body>
 </html>
